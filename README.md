@@ -1,55 +1,43 @@
-# 🚀 SkillSync
+# 🚀 SkillSync - AI Skill Exchange Platform
 
-SkillSync is a MERN Stack web application that enables users to exchange skills instead of paying money.
+SkillSync is a full-stack MERN application that enables users to exchange skills instead of paying for courses.
 
-**Example:**  
-"I'll teach Java if you teach Photoshop."
+> 💡 Example:
+> "I'll teach Java if you teach Photoshop."
 
-The platform allows users to create profiles, showcase their skills, find people with complementary skills, and collaborate through skill exchange.
-
----
-
-## 📌 Project Status
-
-🚧 **Currently in Development**
-
-✅ Phase 1 Completed – Project Setup & UI Foundation
+Users can register, log in securely, create profiles, add their skills, discover other learners, and (upcoming) exchange skills through intelligent matching.
 
 ---
 
-## ✨ Current Features
+# ✨ Features
 
-- Responsive Landing Page
-- React Router Navigation
-- Dashboard Page
-- Login Page UI
-- Register Page UI
-- User Profile UI
-- Reusable Components
-- Express.js Backend Setup
-- MongoDB Connection
-- REST API Structure
-- Tailwind CSS Integration
-- Axios Configuration
+## ✅ Phase 1
+- Modern React + Vite frontend
+- Responsive UI with Tailwind CSS
+- Express.js REST API
+- MongoDB integration
+- Landing Page
+- Dashboard
+- Profile page
+- React Router
+- Axios API integration
+- Clean project structure
 
----
-
-## 🔄 Upcoming Features
-
+## ✅ Phase 2
+- User Registration
+- User Login
+- Password Hashing using bcrypt
 - JWT Authentication
-- Secure Login & Registration
-- User Skill Management
-- Skill Matching System
-- Session Booking
-- Ratings & Reviews
-- AI Compatibility Score
-- Real-Time Chat
-- Notifications
-- Admin Dashboard
+- Protected Routes
+- Authentication Context API
+- Persistent Login using Local Storage
+- Logout Functionality
+- Backend API Protection
+- MongoDB User Storage
 
 ---
 
-## 🛠️ Tech Stack
+# 🛠️ Tech Stack
 
 ### Frontend
 - React.js
@@ -63,35 +51,41 @@ The platform allows users to create profiles, showcase their skills, find people
 - Express.js
 - MongoDB
 - Mongoose
+- JWT (JSON Web Token)
+- bcryptjs
+- dotenv
 
-### Tools
+### Development Tools
+- VS Code
 - Git
 - GitHub
-- VS Code
+- Postman
 - MongoDB Compass
 
 ---
 
-## 📂 Project Structure
+# 📂 Folder Structure
 
-```
-SkillSync/
+```text
+SkillSync
 │
-├── backend/
-│   ├── config/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   ├── utils/
-│   └── server.js
+├── backend
+│   ├── config
+│   ├── controllers
+│   ├── middleware
+│   ├── models
+│   ├── routes
+│   ├── utils
+│   ├── server.js
+│   └── package.json
 │
-└── frontend/
-    ├── public/
-    ├── src/
-    │   ├── api/
-    │   ├── components/
-    │   ├── pages/
+└── frontend
+    ├── public
+    ├── src
+    │   ├── api
+    │   ├── components
+    │   ├── context
+    │   ├── pages
     │   ├── App.jsx
     │   └── main.jsx
     └── package.json
@@ -99,23 +93,68 @@ SkillSync/
 
 ---
 
-## ⚙️ Installation
+# 🔐 Authentication Flow
 
-### Clone the Repository
+```text
+User
+   │
+   ▼
+Register / Login
+   │
+   ▼
+Express API
+   │
+   ▼
+MongoDB
+   │
+   ▼
+Password Hashing (bcrypt)
+   │
+   ▼
+JWT Token Generated
+   │
+   ▼
+Stored in Local Storage
+   │
+   ▼
+Protected Routes
+```
+
+---
+
+# ⚙️ Installation
+
+## Clone Repository
 
 ```bash
 git clone https://github.com/akilarani21/SkillSync.git
 ```
 
-### Backend Setup
+## Backend Setup
 
 ```bash
 cd SkillSync/backend
 npm install
+```
+
+Create a `.env` file:
+
+```env
+PORT=5000
+MONGO_URI=mongodb://127.0.0.1:27017/skillsync
+JWT_SECRET=your_secret_key
+CLIENT_URL=http://localhost:5173
+```
+
+Run Backend
+
+```bash
 npm run dev
 ```
 
-### Frontend Setup
+---
+
+## Frontend Setup
 
 ```bash
 cd ../frontend
@@ -123,52 +162,76 @@ npm install
 npm run dev
 ```
 
----
-
-## 🌐 Local Development
-
-Frontend:
+Open:
 
 ```
 http://localhost:5173
 ```
 
-Backend:
+---
 
-```
-http://localhost:5000
-```
+# 🧪 API Endpoints
+
+### Authentication
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/register` | Register a new user |
+| POST | `/api/auth/login` | Login user |
+
+### General
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/health` | API Health Check |
 
 ---
 
-## 📸 Screenshots
+# 🚀 Upcoming Features
 
-Coming Soon...
+## Phase 3
+- User Profile Management
+- Bio & Location
+- Avatar Upload
+- Skills Offered
+- Skills Wanted
+
+## Phase 4
+- Skill Matching
+- AI Compatibility Score
+- Search & Filters
+- User Discovery
+
+## Phase 5
+- Session Booking
+- Ratings & Reviews
+- Real-Time Chat
+- Notifications
 
 ---
 
-## 🎯 Roadmap
+# 📌 Project Status
 
-- ✅ Phase 1 – Project Setup & UI
-- 🔄 Phase 2 – Authentication (JWT)
-- ⏳ Phase 3 – User Profiles & Skills
-- ⏳ Phase 4 – Skill Matching
-- ⏳ Phase 5 – Session Booking
-- ⏳ Phase 6 – Ratings & Reviews
-- ⏳ Phase 7 – AI Compatibility
-- ⏳ Phase 8 – Chat & Notifications
-- ⏳ Phase 9 – Deployment
+| Phase | Status |
+|--------|--------|
+| Phase 1 - Project Setup | ✅ Completed |
+| Phase 2 - Authentication | ✅ Completed |
+| Phase 3 - User Profiles & Skills | 🚧 In Progress |
+| Phase 4 - Skill Matching | ⏳ Planned |
+| Phase 5 - Chat & Booking | ⏳ Planned |
+| Deployment | ⏳ Planned |
 
 ---
 
-## 👩‍💻 Developer
+# 👩‍💻 Author
 
 **Akila Rani**
 
-GitHub: https://github.com/akilarani21
+- GitHub: https://github.com/akilarani21
+- LinkedIn: *(Add your LinkedIn profile link here)*
 
 ---
 
-## 📄 License
+# 📄 License
 
 This project is licensed under the MIT License.
