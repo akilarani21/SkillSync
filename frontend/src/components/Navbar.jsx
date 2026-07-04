@@ -1,97 +1,128 @@
-import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import Button from './Button.jsx';
+import { useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import Button from "./Button";
+import { useAuth } from "../context/AuthContext";
 
 const NAV_LINKS = [
-  { to: '/', label: 'Home' },
-  { to: '/dashboard', label: 'Dashboard' },
-  { to: '/profile', label: 'Profile' },
+  { to: "/", label: "Home" },
+  { to: "/dashboard", label: "Dashboard" },
+  { to: "/profile", label: "Profile" },
 ];
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const navigate = useNavigate();
+
+  const { isAuthenticated, user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   const linkClass = ({ isActive }) =>
     `text-sm font-medium transition-colors ${
-      isActive ? 'text-primary-600' : 'text-gray-600 hover:text-primary-600'
+      isActive
+        ? "text-primary-600"
+        : "text-gray-600 hover:text-primary-600"
     }`;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/80 backdrop-blur-md">
       <nav className="section-container flex h-16 items-center justify-between">
-        {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600 text-sm font-bold text-white">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600 text-white font-bold">
             S
           </div>
-          <span className="text-lg font-bold text-gray-900">SkillSync</span>
+
+          <span className="text-lg font-bold">SkillSync</span>
         </Link>
 
-        {/* Desktop links */}
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map((link) => (
-            <NavLink key={link.to} to={link.to} className={linkClass} end={link.to === '/'}>
+            <NavLink
+              key={link.to}
+              to={link.to}
+              className={linkClass}
+              end={link.to === "/"}
+            >
               {link.label}
             </NavLink>
           ))}
         </div>
 
-        {/* Desktop actions */}
-        <div className="hidden items-center gap-3 md:flex">
-          <Link to="/login">
-            <Button variant="outline">Log In</Button>
-          </Link>
-          <Link to="/register">
-            <Button variant="primary">Sign Up</Button>
-          </Link>
+        <div className="hidden md:flex items-center gap-3">
+          {isAuthenticated ? (
+            <>
+              <span className="text-sm font-medium text-gray-700">
+                Hi, {user?.name}
+              </span>
+
+              <Button variant="outline" onClick={handleLogout}>
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">
+                <Button variant="outline">Login</Button>
+              </Link>
+
+              <Link to="/register">
+                <Button>Sign Up</Button>
+              </Link>
+            </>
+          )}
         </div>
 
-        {/* Mobile menu button */}
         <button
-          onClick={() => setIsOpen((prev) => !prev)}
-          className="inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:bg-gray-100 md:hidden"
-          aria-label="Toggle menu"
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden"
         >
-          {isOpen ? (
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          )}
+          ☰
         </button>
       </nav>
 
-      {/* Mobile menu panel */}
       {isOpen && (
-        <div className="border-t border-gray-100 bg-white px-4 pb-4 pt-2 md:hidden">
-          <div className="flex flex-col gap-3">
-            {NAV_LINKS.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                onClick={() => setIsOpen(false)}
-                className={linkClass}
-                end={link.to === '/'}
+        <div className="md:hidden border-t p-4 flex flex-col gap-3">
+
+          {NAV_LINKS.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              className={linkClass}
+              onClick={() => setIsOpen(false)}
+            >
+              {link.label}
+            </NavLink>
+          ))}
+
+          {isAuthenticated ? (
+            <>
+              <p className="font-semibold">
+                {user?.name}
+              </p>
+
+              <Button
+                variant="outline"
+                onClick={handleLogout}
               >
-                {link.label}
-              </NavLink>
-            ))}
-            <div className="mt-2 flex flex-col gap-2">
-              <Link to="/login" onClick={() => setIsOpen(false)}>
-                <Button variant="outline" fullWidth>
-                  Log In
-                </Button>
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">
+                <Button fullWidth>Login</Button>
               </Link>
-              <Link to="/register" onClick={() => setIsOpen(false)}>
-                <Button variant="primary" fullWidth>
-                  Sign Up
-                </Button>
+
+              <Link to="/register">
+                <Button fullWidth>Sign Up</Button>
               </Link>
-            </div>
-          </div>
+            </>
+          )}
+
         </div>
       )}
     </header>

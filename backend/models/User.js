@@ -1,49 +1,81 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
-/**
- * Basic User schema for Phase 1.
- * Intentionally excludes password hashing / JWT fields —
- * those will be added in the Authentication phase.
- */
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'Name is required'],
+      required: [true, "Name is required"],
       trim: true,
     },
+
     email: {
       type: String,
-      required: [true, 'Email is required'],
+      required: [true, "Email is required"],
       unique: true,
-      trim: true,
       lowercase: true,
+      trim: true,
     },
+
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+      minlength: 6,
+      select: false,
+    },
+
     bio: {
       type: String,
-      default: '',
+      default: "",
       maxlength: 500,
     },
+
     avatar: {
       type: String,
-      default: '',
+      default: "",
     },
+
     skillsOffered: {
       type: [String],
       default: [],
     },
+
     skillsWanted: {
       type: [String],
       default: [],
     },
+
     location: {
       type: String,
-      default: '',
+      default: "",
+    },
+
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-const User = mongoose.model('User', userSchema);
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+
+  next();
+});
+
+userSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
+const User = mongoose.model("User", userSchema);
 
 export default User;
