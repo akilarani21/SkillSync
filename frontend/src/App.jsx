@@ -8,7 +8,9 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
-
+import Users from "./pages/Users";
+import PublicProfile from "./pages/PublicProfile";
+import SwapRequests from "./pages/SwapRequests";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -41,6 +43,12 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route path="/users" element={<Users />} />
+
+          <Route path="/users/:id" element={<PublicProfile />} />
+
+          <Route path="/swaps" element={<SwapRequests />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
