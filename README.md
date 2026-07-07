@@ -1,6 +1,6 @@
-# SkillSync – AI Skill Exchange Platform
+# SkillSync
 
-SkillSync is a full-stack MERN application that enables users to exchange skills by connecting with people who can teach the skills they want to learn. Users can create profiles, showcase their expertise, discover other users, and request skill exchanges.
+SkillSync is a full-stack web application that connects people who want to exchange skills. Users can create profiles, showcase the skills they can teach, discover other users, and send skill swap requests to learn from one another.
 
 ---
 
@@ -11,40 +11,30 @@ SkillSync is a full-stack MERN application that enables users to exchange skills
 - User Login
 - JWT Authentication
 - Protected Routes
-- Secure Password Hashing (bcrypt)
+- Secure Password Hashing using bcrypt
 
 ### User Profile
+- View Profile
 - Edit Profile
 - Update Bio
 - Update Location
-- Profile Avatar
-- Avatar Preview
+- Add Avatar URL
 - Add Skills Offered
 - Add Skills Wanted
-- Interactive Skill Chips
-- Remove Skills
-- Persistent Profile Data
 
 ### User Discovery
 - Browse All Users
 - Search Users by Name
 - View Public User Profiles
-- Responsive User Cards
-- Skill Badges
-- Public Profile Page
+- View User Skills
 
-### Dashboard
-- Backend Health Status
-- Dashboard Layout
-- API Connectivity Indicator
-
-### Backend
-- RESTful APIs
-- Express.js
-- MongoDB + Mongoose
-- JWT Authentication
-- Protected Middleware
-- Error Handling Middleware
+### Skill Swap System
+- Send Skill Swap Requests
+- Prevent Duplicate Requests
+- View Sent and Received Requests
+- Accept Skill Swap Requests
+- Reject Skill Swap Requests
+- Request Status Tracking (Pending / Accepted / Rejected)
 
 ---
 
@@ -55,16 +45,14 @@ SkillSync is a full-stack MERN application that enables users to exchange skills
 - React Router DOM
 - Axios
 - Tailwind CSS
-- Vite
 
 ### Backend
 - Node.js
 - Express.js
 - MongoDB
 - Mongoose
-- JWT
+- JWT Authentication
 - bcryptjs
-- dotenv
 
 ---
 
@@ -73,66 +61,103 @@ SkillSync is a full-stack MERN application that enables users to exchange skills
 ```
 SkillSync
 │
-├── backend
-│   ├── config
-│   ├── controllers
-│   ├── middleware
-│   ├── models
-│   ├── routes
-│   ├── utils
-│   └── server.js
-│
 ├── frontend
 │   ├── src
 │   │   ├── api
 │   │   ├── components
-│   │   ├── context
 │   │   ├── pages
-│   │   └── App.jsx
-│   └── public
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   │
+│   └── package.json
+│
+├── backend
+│   ├── controllers
+│   ├── middleware
+│   ├── models
+│   ├── routes
+│   ├── config
+│   ├── server.js
+│   └── package.json
 │
 └── README.md
 ```
 
 ---
 
-## Implemented Pages
-
-- Home
-- Login
-- Register
-- Dashboard
-- My Profile
-- Users Directory
-- Public User Profile
-- 404 Page
-
----
-
-## REST API
-
-### Authentication
-
-| Method | Endpoint |
-|----------|---------------------|
-| POST | /api/auth/register |
-| POST | /api/auth/login |
-| GET | /api/auth/profile |
-| PUT | /api/auth/profile |
+## Database Collections
 
 ### Users
 
-| Method | Endpoint |
-|----------|---------------------|
-| GET | /api/users |
-| GET | /api/users?search=keyword |
-| GET | /api/users/:id |
+Stores user information.
 
-### Health
+Fields include:
 
-| Method | Endpoint |
-|----------|---------------------|
-| GET | /api/health |
+- Name
+- Email
+- Password (Encrypted)
+- Bio
+- Avatar
+- Skills Offered
+- Skills Wanted
+- Location
+- Role
+
+---
+
+### Swap Requests
+
+Stores skill exchange requests.
+
+Fields include:
+
+- Sender
+- Receiver
+- Offered Skill
+- Wanted Skill
+- Message
+- Status
+- Created At
+- Updated At
+
+---
+
+## API Endpoints
+
+### Authentication
+
+```
+POST /api/auth/register
+POST /api/auth/login
+```
+
+---
+
+### Profile
+
+```
+GET /api/profile
+PUT /api/profile
+```
+
+---
+
+### Users
+
+```
+GET /api/users
+GET /api/users/:id
+```
+
+---
+
+### Swap Requests
+
+```
+POST /api/swaps
+GET /api/swaps
+PUT /api/swaps/:id
+```
 
 ---
 
@@ -141,11 +166,12 @@ SkillSync
 ### Clone Repository
 
 ```bash
-git clone https://github.com/akilarani21/SkillSync.git
-cd SkillSync
+git clone https://github.com/yourusername/SkillSync.git
 ```
 
-### Backend
+---
+
+### Backend Setup
 
 ```bash
 cd backend
@@ -153,7 +179,9 @@ npm install
 npm run dev
 ```
 
-### Frontend
+---
+
+### Frontend Setup
 
 ```bash
 cd frontend
@@ -170,72 +198,63 @@ Create a `.env` file inside the backend folder.
 ```env
 PORT=5000
 
-NODE_ENV=development
+MONGO_URI=your_mongodb_connection_string
 
-MONGO_URI=mongodb://127.0.0.1:27017/skillsync
-
-CLIENT_URL=http://localhost:5173
-
-JWT_SECRET=skillsync_secret_key
-
-JWT_EXPIRES_IN=7d
+JWT_SECRET=your_secret_key
 ```
 
 ---
 
-## Current Project Progress
+## Current Workflow
 
-### Phase 1
-- Project Setup
-- MERN Architecture
-- MongoDB Connection
-- Express Server
-- React Frontend
-
-### Phase 2
-- JWT Authentication
-- Login
-- Registration
-- Protected Routes
-
-### Phase 3
-- User Profile
-- Avatar Preview
-- Profile Update
-- Skill Management
-- Skill Chips
-
-### Phase 4
-- User Directory
-- User Search
-- Public User Profiles
+1. Register a new account.
+2. Login using registered credentials.
+3. Complete your profile.
+4. Add skills you can teach.
+5. Add skills you want to learn.
+6. Browse other users.
+7. View another user's profile.
+8. Send a skill swap request.
+9. View your swap requests.
+10. Accept or reject incoming requests.
 
 ---
 
-## Upcoming Features
+## Screenshots
 
-- Skill Swap Requests
-- Accept / Reject Requests
-- Notifications
-- AI Skill Matching
-- Ratings & Reviews
-- Admin Dashboard
-- Cloudinary Image Upload
-- Real-time Chat
+- Home Page
+- Login Page
+- Register Page
+- Dashboard
+- My Profile
+- Users List
+- Public User Profile
+- Swap Requests
+
+---
+
+## Future Improvements
+
+- Real-time Notifications
+- Chat Between Users
+- Image Upload
 - Email Notifications
-- Deployment
+- Skill Recommendations
+- Rating & Review System
+- Admin Dashboard
 
 ---
 
 ## Author
 
-**Akila Rani**
+**Akila Rani B**
 
-GitHub:
-https://github.com/akilarani21
+B.E. Computer Science and Engineering
+
+Passionate Full-Stack Developer focused on building scalable web applications using the MERN Stack.
 
 ---
 
 ## License
 
-This project is licensed under the MIT License.
+This project is developed for educational and portfolio purposes.
